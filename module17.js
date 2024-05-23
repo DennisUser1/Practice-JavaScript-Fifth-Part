@@ -46,6 +46,7 @@
 // console.log(end - start);
 
 import refs from './refs17.js'; 
+import Timer from './timer17.js';
 
 // const NEW_YEAR = new Date("01.01.2025 00:00");
 
@@ -93,45 +94,10 @@ import refs from './refs17.js';
 //     timer = setInterval(handleTime, 1000);
 // });
 
-class Timer {
-    #timer;
-    static NEW_YEAR_PROP = new Date("01.01.2025 00:00");
-   
-    constructor(element, reloadTime) {
-        this.element = element;
-        this.reloadTime = reloadTime;
-    }
 
-    create(){
-        this.#timer = setInterval(() => {}, this.reloadTime);
-    }
-
-    attachTimer () {
-        const timeLeftValue = this.#calculateDate();
-        this.element.textContent = timeLeftValue;
-    }
-
-    start() {
-        this.stop();
-        this.create();
-    }
-    stop() {
-        clearInterval(this.#timer);
-    }
-
-    // Приватні методи в кінці
-    #calculateDate() {
-        const now = new Date();
-        const timeDifference = NEW_YEAR - now;
-
-        const daysLeft = Math.floor(timeDifference / 86400000);
-        const hoursLeft = Math.floor((timeDifference % 86400000) / 3600000);
-        const minutesLeft = Math.floor((timeDifference % 3600000) / 60000);
-        const secondsLeft = Math.floor((timeDifference % 60000) / 1000);
-        
-        return `${daysLeft}d ${hoursLeft}h ${minutesLeft}m ${secondsLeft}s`;
-    }
-}
-
-const timer = new Timer(classTitle, 1000);
+// id="classTitle"
+const timer = new Timer(refs.classTitle, 1000);
 timer.start();
+
+refs.stopTimerEl.addEventListener("click", () => timer.stop());
+refs.startTimerEl.addEventListener("click", () => timer.start());
