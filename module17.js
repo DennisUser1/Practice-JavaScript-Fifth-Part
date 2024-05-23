@@ -47,48 +47,70 @@
 
 import refs from './refs17.js'; 
 
-const NEW_YEAR = new Date("01.01.2025 00:00");
+// const NEW_YEAR = new Date("01.01.2025 00:00");
 
-const handleTime = () => {
-    const now = new Date();
-    const timeDifference = NEW_YEAR - now;
+// const handleTime = () => {
+//     const now = new Date();
+//     const timeDifference = NEW_YEAR - now;
 
-    // 1 day = 86 400 000 milliseconds
-    // 1 hour = 3 600 000 milliseconds
-    // 1 minute = 60 000 milliseconds 
-    // 1s = 1000ms
-    const daysLeft = Math.floor(timeDifference / 86400000);
-    const hoursLeft = Math.floor((timeDifference % 86400000) / 3600000);
-    const minutesLeft = Math.floor((timeDifference % 3600000) / 60000);
-    const secondsLeft = Math.floor((timeDifference % 60000) / 1000);
+//     // 1 day = 86 400 000 milliseconds
+//     // 1 hour = 3 600 000 milliseconds
+//     // 1 minute = 60 000 milliseconds 
+//     // 1s = 1000ms
+//     const daysLeft = Math.floor(timeDifference / 86400000);
+//     const hoursLeft = Math.floor((timeDifference % 86400000) / 3600000);
+//     const minutesLeft = Math.floor((timeDifference % 3600000) / 60000);
+//     const secondsLeft = Math.floor((timeDifference % 60000) / 1000);
 
-//  const timeLeftValue = `${daysLeft}d ${hoursLeft}h ${minutesLeft}m ${secondsLeft}s`;
-//  functionalTimerEl.textContent = timeLeftValue;
+// //  const timeLeftValue = `${daysLeft}d ${hoursLeft}h ${minutesLeft}m ${secondsLeft}s`;
+// //  functionalTimerEl.textContent = timeLeftValue;
 
-    attachToElement(refs.functionalTimerEl, {
-        daysLeft, 
-        hoursLeft, 
-        minutesLeft, 
-        secondsLeft,
-    });
-};
+//     attachToElement(refs.functionalTimerEl, {
+//         daysLeft, 
+//         hoursLeft, 
+//         minutesLeft, 
+//         secondsLeft,
+//     });
+// };
 
-const attachToElement = (el, {
-    daysLeft, 
-    hoursLeft, 
-    minutesLeft, 
-    secondsLeft,
-}) => {
-    const timeLeftValue = `${daysLeft}d ${hoursLeft}h ${minutesLeft}m ${secondsLeft}s`;
-    el.textContent = timeLeftValue;
+// const attachToElement = (el, {
+//     daysLeft, 
+//     hoursLeft, 
+//     minutesLeft, 
+//     secondsLeft,
+// }) => {
+//     const timeLeftValue = `${daysLeft}d ${hoursLeft}h ${minutesLeft}m ${secondsLeft}s`;
+//     el.textContent = timeLeftValue;
+// }
+
+// let timer = setInterval(handleTime, 1000);
+
+// refs.stopTimerEl.addEventListener("click", () => {
+//     clearInterval(timer);
+// });
+
+// refs.startTimerEl.addEventListener("click", () => {
+//     timer = setInterval(handleTime, 1000);
+// });
+
+class Timer {
+    static NEW_YEAR_PROP = new Date("01.01.2025 00:00");
+    #timer;
+    constructor(element, reloadTime) {
+        this.element = element;
+        this.reloadTime = reloadTime;
+    }
+
+    create(){
+        this.#timer = setInterval(() => {}, this.reloadTime);
+    }
+    start() {
+        this.create();
+    }
+    stop() {
+        clearInterval(this.#timer);
+    }
 }
 
-let timer = setInterval(handleTime, 1000);
-
-refs.stopTimerEl.addEventListener("click", () => {
-    clearInterval(timer);
-});
-
-refs.startTimerEl.addEventListener("click", () => {
-    timer = setInterval(handleTime, 1000);
-});
+const timer = new Timer(classTitle, 1000);
+timer.create();
