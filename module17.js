@@ -94,8 +94,9 @@ import refs from './refs17.js';
 // });
 
 class Timer {
-    static NEW_YEAR_PROP = new Date("01.01.2025 00:00");
     #timer;
+    static NEW_YEAR_PROP = new Date("01.01.2025 00:00");
+   
     constructor(element, reloadTime) {
         this.element = element;
         this.reloadTime = reloadTime;
@@ -104,13 +105,33 @@ class Timer {
     create(){
         this.#timer = setInterval(() => {}, this.reloadTime);
     }
+
+    attachTimer () {
+        const timeLeftValue = this.#calculateDate();
+        this.element.textContent = timeLeftValue;
+    }
+
     start() {
+        this.stop();
         this.create();
     }
     stop() {
         clearInterval(this.#timer);
     }
+
+    // Приватні методи в кінці
+    #calculateDate() {
+        const now = new Date();
+        const timeDifference = NEW_YEAR - now;
+
+        const daysLeft = Math.floor(timeDifference / 86400000);
+        const hoursLeft = Math.floor((timeDifference % 86400000) / 3600000);
+        const minutesLeft = Math.floor((timeDifference % 3600000) / 60000);
+        const secondsLeft = Math.floor((timeDifference % 60000) / 1000);
+        
+        return `${daysLeft}d ${hoursLeft}h ${minutesLeft}m ${secondsLeft}s`;
+    }
 }
 
 const timer = new Timer(classTitle, 1000);
-timer.create();
+timer.start();
