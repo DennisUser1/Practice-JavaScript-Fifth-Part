@@ -43,3 +43,85 @@
 //         resolve(value * 2);
 //     });
 // }).then(value => console.log());
+
+/* 
+    1. Implement adding author 
+    2. Implement rendering authors 
+*/
+
+import api from "./api18.js" 
+
+const addAuthorFormEl = document.getElementById("addAuthorForm");
+const authorsNumberEl = document.getElementById("authorsNumber");
+const authorsEl = document.getElementById("authors");
+
+const addAuthor = (event) => {
+    event.preventDefault();
+    const authorName = event.target.authorName.value;
+
+    if (authorName) {
+        const delay = Math.random() > 0.5 ? 1500 : 2500;
+        api.addAuthor(authorName, delay);
+        renderAuthors();
+    }
+};
+
+const renderAuthors = () => {
+    api
+        .getAuthors()
+        .then((result) => {
+            if (Array.isArray(result)) {
+                authorsEl.innerHTML = "";
+                authorsNumberEl.textContent = `There are ${result.length} authors in the system`;
+
+                result.forEach((item) => {
+                    const el = document.createElement("li");
+                    el.textContent = item;
+                    authorsEl.appendChild(el);
+                });
+            }
+        })
+        .catch((err) => (authorsEl.innerHTML = err));
+    };
+
+addAuthorFormEl.addEventListener("submit", addAuthor);
+
+const authors = new Promise((resolve, reject) => {
+    const isSuccess = Math.random() > 0.5 ? true : false;
+    const data = [{ name: "Author First", book: "Lifestyle" }];
+    setTimeout(() => {
+        if (isSuccess) {
+            resolve(data);
+         } else {
+            reject("No data");
+         }
+    }, 2000);
+});
+authors
+.then((result) => console.log(result))
+.catch((error) => console.log(error))
+.finally(() => console.log("This is finally"));
+
+// const promise = new Promise((resolve, reject) => {
+//      const isSuccess = true;
+//      const data = [];
+//      // some code, some processes
+
+//      // send request to the server
+//      // get data
+//      // process data
+//      if (isSuccess) {
+//         resolve(data);
+//      } else {
+//         reject("No data");
+//      }
+// });
+// promise.then(onResolve, onReject).catch().finally();
+
+// function(x, callbackA, callbackB) {
+//     if (x) {
+//         callbackA(x, callbackC, callbackD)
+//     } else {
+//         callbackB()
+//     }
+// }
