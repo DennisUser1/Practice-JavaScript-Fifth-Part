@@ -44,7 +44,9 @@
 //     });
 // }).then(value => console.log());
 
-/* 
+
+
+/*  Plan
     1. Implement adding author 
     2. Implement rendering authors 
 */
@@ -101,6 +103,9 @@ authors
 .then((result) => console.log(result))
 .catch((error) => console.log(error))
 .finally(() => console.log("This is finally"));
+
+
+// Приклад
 
 // const promise = new Promise((resolve, reject) => {
 //      const isSuccess = true;
